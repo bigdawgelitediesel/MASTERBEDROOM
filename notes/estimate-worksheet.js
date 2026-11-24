@@ -29,7 +29,10 @@ export const estimate = {
     ] },
     { name: 'Finish', items: [
       { item: 'Drywall primer, 1 gal', qty: 1, each: 25.00, note: 'About 210 sq ft of new wall face' },
-      { item: 'Wall paint, 1 gal', qty: 1, each: 40.00, note: '' },
+      // Whole room (bedroom + closet + bathroom): about 930 sq ft of wall, two coats, 375 sq ft per gallon = 5 gal
+      { item: 'Wall paint, 1 gal', qty: 5, each: 40.00, note: 'Whole master suite, two coats, about 930 sq ft of wall' },
+      { item: 'Ceiling paint, 1 gal', qty: 2, each: 30.00, note: 'About 400 sq ft of ceiling, two coats' },
+      { item: 'Rollers, brushes, tape, tray', qty: 1, each: 35.00, note: '' },
       { item: 'Baseboard, 12 ft', qty: 3, each: 20.00, note: 'About 26 ft: both sides of wall H, closet side of the shower wall, return' },
     ] },
     { name: 'Electrical: 4 outlets on wall H', items: [

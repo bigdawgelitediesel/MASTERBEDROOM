@@ -3,9 +3,9 @@
 
 export const estimate = {
   date: '2026-11-24',
-  title: 'Material estimate: shower wall and wall H',
-  total: 935.40,
-  note: 'Materials to build the two new walls: the shower wall with its short return, and wall H with its doorway and four outlets. Both walls are framed in 2x4 at 16 on center, 95 1/4 tall.',
+  title: 'Material estimate: shower wall, wall H and paint for the whole room',
+  total: 1241.40,
+  note: 'Materials to build the two new walls: the shower wall with its short return, and wall H with its doorway and four outlets. Both walls are framed in 2x4 at 16 on center, 95 1/4 tall. Paint covers the whole master suite: bedroom, walk-in closet and bathroom.',
   groups: [
     { name: 'Framing', items: [
       { item: '2x4 x 8 ft studs', qty: 33, note: 'Studs, doorway framing, corners, blocking' },
@@ -19,7 +19,10 @@ export const estimate = {
       { item: 'Screws, joint compound, tape, corner bead', qty: '', note: '' },
     ] },
     { name: 'Finish', items: [
-      { item: 'Primer and wall paint', qty: '1 gal each', note: 'About 210 sq ft of new wall' },
+      { item: 'Primer', qty: '1 gal', note: 'New drywall on the two new walls' },
+      { item: 'Wall paint', qty: '5 gal', note: 'Two coats on every wall in the bedroom, closet and bathroom, about 930 sq ft' },
+      { item: 'Ceiling paint', qty: '2 gal', note: 'Two coats on about 400 sq ft of ceiling' },
+      { item: 'Rollers, brushes, tape and tray', qty: '', note: '' },
       { item: 'Baseboard', qty: '26 ft', note: 'Both sides of wall H, closet side of the shower wall, return' },
     ] },
     { name: 'Electrical: four outlets on wall H', items: [
