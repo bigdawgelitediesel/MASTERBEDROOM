@@ -137,7 +137,7 @@ const builders = {
     const glass = mat(COLORS.glass, { transparent: true, opacity: 0.28, roughness: 0.05 });
     g.add(box(w, 3, d, mat(COLORS.stone)));
     g.add(box(w, h, 0.5, glass, 0, 3, d / 2));
-    g.add(box(0.5, h, d, glass, w / 2, 3, 0));
+    if (!f.alcove) g.add(box(0.5, h, d, glass, w / 2, 3, 0));
     g.add(box(1, 8, 1, mat(COLORS.chrome, { metalness: 0.8 }), 0, h - 4, -d / 2 + 2));
     return g;
   },

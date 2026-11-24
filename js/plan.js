@@ -7,7 +7,9 @@
 //   Wall A: bedroom doorway edge to wall B = 104. Door to door (bedroom door to bathroom door) = 26 1/2.
 //   Bathroom is off wall A1: 84 1/2 wide, 135 1/2 long.
 //   Wall E is 103, not 84 1/2: the bathroom pushes in past wall A and takes that away from wall D.
-//   That pushed-in wall (A1) runs from wall D until 24 before the BATHROOM door.
+//   That pushed-in wall (A1) ran from wall D until 24 before the BATHROOM door.
+//   SHOWER (planned): standard 60 x 30 along wall A1. To get 60 inside, the return wall moves 4 toward
+//   the bathroom door (20 of wall left before the door instead of 24) and runs on 30 deep as the shower end wall.
 //   The bathroom door is on the wall A line (the 84 1/2 depth), not out on the pushed-in wall.
 //
 // ASSUMED, not measured yet:
@@ -29,7 +31,8 @@ const E = 103;                   // wall E, full length
 const DOOR = 32;
 const bedDoorX = L - 104 - DOOR;             // 143
 const bathDoorX = bedDoorX - 26.5 - DOOR;    // 84 1/2
-const PW = bathDoorX - 24 - T;   // push-in inside width: its outside face stops 24 before the bathroom door
+const PW = 60;                   // push-in inside width, set to 60 for a standard shower pan (was 56 at 24 before the door)
+const SH = 30;                   // shower depth off wall A1
 const by = -(T + BW);            // top inside edge of the bathroom on the plan
 const pd = E - BW - T;           // how far the push-in reaches into the bedroom, inside (14)
 const ax = PW + h;                           // where wall A now starts (centerline of the push-in side wall)
@@ -75,10 +78,12 @@ export const plan = {
     { letter: 'A1', room: 'bed', len: PW + T, name: 'Pushed-in bathroom wall, wall D to 24 before the bathroom door',
       a: [-h, pd + h], b: [ax, pd + h], openings: [] },
     // short return from A1 back to the wall A line (not lettered yet)
-    { name: 'A1 return wall', a: [ax, pd + h], b: [ax, -h], openings: [] },
+    { name: 'A1 return wall, carried on as the shower end wall', a: [ax, pd + h], b: [ax, pd - SH], openings: [] },
   ],
 
   // Fixtures and furniture. x,y = CENTER. rot = which way its back faces (0 top, 90 right, 180 bottom, 270 left).
   // type: bed | nightstand | dresser | vanity | toilet | tub | shower | closet | box
-  fixtures: [],
+  fixtures: [
+    { type: 'shower', name: 'Shower 60 x 30', x: PW / 2, y: pd - SH / 2, w: PW, d: SH, rot: 180, alcove: true },
+  ],
 };
