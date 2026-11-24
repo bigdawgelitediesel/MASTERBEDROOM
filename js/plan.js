@@ -15,16 +15,22 @@ const T = 4.5;       // wall thickness
 const h = T / 2;     // walls are drawn centered on a line, so push the line out half a wall
                      // to keep the INSIDE faces on the tape numbers
 const L = 279, W = 168;
+// BATHROOM (2026-11-24): 103 wide, 135 1/2 long. It sits on the other side of wall A1.
+// The 135 1/2 side is laid along wall A starting at the wall D corner, because the bathroom
+// door (84 1/2 to 116 1/2 along wall A) does not fit inside 103. Not confirmed.
+const BL = 135.5, BW = 103;
+const by = -(T + BW);   // top inside edge of the bathroom on the plan
 
 export const plan = {
-  name: 'Master Bedroom',
+  name: 'Master Suite',
   note: '',
   ceiling: 95.25,
   wallThickness: T,
 
   // Floor areas (inside dimensions). x,y = top-left corner, w = width, d = depth.
   rooms: [
-    { id: 'bed', name: 'Master bedroom', x: 0, y: 0, w: L, d: W, floor: 'wood' },
+    { id: 'bed',  name: 'Master bedroom', x: 0, y: 0,  w: L,  d: W,  floor: 'wood' },
+    { id: 'bath', name: 'Bathroom',       x: 0, y: by, w: BL, d: BW, floor: 'tile' },
   ],
 
   // Walls run from point a to point b. letter = the wall's name tag, len = inside length.
@@ -48,7 +54,15 @@ export const plan = {
     { letter: 'D', len: W, name: 'End wall (left)',    a: [-h, W + h],     b: [-h, -h],        openings: [] },
   ],
 
+  // (bathroom walls are appended below the plan object)
   // Fixtures and furniture. x,y = CENTER. rot = which way its back faces (0 top, 90 right, 180 bottom, 270 left).
   // type: bed | nightstand | dresser | vanity | toilet | tub | shower | closet | box
   fixtures: [],
 };
+
+// Bathroom walls. Its fourth wall is wall A1, shared with the bedroom.
+plan.walls.push(
+  { name: 'Bathroom left wall',  a: [-h, -h],          b: [-h, by - h],      openings: [] },
+  { name: 'Bathroom back wall',  a: [-h, by - h],      b: [BL + h, by - h],  openings: [] },
+  { name: 'Bathroom right wall', a: [BL + h, by - h],  b: [BL + h, -h],      openings: [] },
+);
