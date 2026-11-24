@@ -29,26 +29,28 @@ export const plan = {
 
   // Floor areas (inside dimensions). x,y = top-left corner, w = width, d = depth.
   rooms: [
-    { id: 'main', name: 'Main area', x: 0,     y: 0,    w: 238.5, d: 168,  floor: 'wood' },
-    { id: 'bump', name: 'Jog',       x: 238.5, y: 84.5, w: 40.5,  d: 83.5, floor: 'wood' },
+    { id: 'main', name: 'Main area', x: 0,     y: 0, w: 238.5, d: 168,  floor: 'wood' },
+    { id: 'bump', name: 'Jog',       x: 238.5, y: 0, w: 40.5,  d: 83.5, floor: 'wood' },
   ],
 
   // Walls run from point a to point b. Openings: at = distance from point a.
+  // Layout: door wall along the bottom, longest wall along the top, window wall on the left.
+  // Standing outside the door looking in, the window wall is on your left (confirmed).
   walls: [
-    { name: 'Other wall (238 1/2)',   a: [-h, -h],          b: [238.5 + h, -h],        openings: [
-      // door edge is 104 from the window wall (measured). Width 32 and which edge are stand-ins.
-      { type: 'door', at: 104 + h, w: 32, h: 80 },
+    { name: 'Longest wall (279)',     a: [-h, -h],          b: [279 + h, -h],          openings: [] },
+    { name: 'End wall (83 1/2, figured)', a: [279 + h, -h], b: [279 + h, 83.5 + h],    openings: [] },
+    { name: 'Jog (40 1/2, figured)',  a: [279 + h, 83.5 + h], b: [238.5 + h, 83.5 + h], openings: [] },
+    { name: 'Another wall (84 1/2)',  a: [238.5 + h, 83.5 + h], b: [238.5 + h, 168 + h], openings: [] },
+    { name: 'Door wall (238 1/2)',    a: [238.5 + h, 168 + h], b: [-h, 168 + h],       openings: [
+      // door edge is 104 from the window wall (measured). Width 32 is a stand-in.
+      { type: 'door', at: 238.5 + h - 104 - 32, w: 32, h: 80 },
     ] },
-    { name: 'Another wall (84 1/2)',  a: [238.5 + h, -h],   b: [238.5 + h, 84.5 - h],  openings: [] },
-    { name: 'Jog (40 1/2, figured)',  a: [238.5 + h, 84.5 - h], b: [279 + h, 84.5 - h], openings: [] },
-    { name: 'End wall (83 1/2, figured)', a: [279 + h, 84.5 - h], b: [279 + h, 168 + h], openings: [] },
-    { name: 'Longest wall (279)',     a: [279 + h, 168 + h], b: [-h, 168 + h],         openings: [] },
     { name: 'Window wall (168)',      a: [-h, 168 + h],     b: [-h, -h],               openings: [
       { type: 'window', at: 62.25, w: 48, h: 48, sill: 36 },   // size and spot are stand-ins
     ] },
     // partition stubs, length unknown
-    { name: 'Partition on longest wall (3 1/2, at 251 1/2)', a: [253.25, 168], b: [253.25, 150], openings: [] },
-    { name: 'Partition on other wall (4 1/2, at 211)',       a: [213.25, 0],   b: [213.25, 18],  openings: [] },
+    { name: 'Partition on longest wall (3 1/2, at 251 1/2)', a: [253.25, 0],   b: [253.25, 18],  openings: [] },
+    { name: 'Partition on door wall (4 1/2, at 211)',        a: [213.25, 168], b: [213.25, 150], openings: [] },
   ],
 
   // Fixtures and furniture. x,y = CENTER. rot = which way its back faces (0 top, 90 right, 180 bottom, 270 left).
