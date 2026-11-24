@@ -26,6 +26,8 @@
 //   other wall 103 + 108 + 4 1/2 + 23; another wall 81 + 3 1/2;
 //   facing the bedroom door from outside, the window wall is on the left.
 
+// EXISTING vs NEW: walls A, B, C, D, E, F, G exist today. Walls marked planned: true (SHOWER, its return, H)
+// are new walls to build and are drawn blue.
 // NAMES (2026-11-24): the wall that was A1 is now called SHOWER, and A2 is now just A.
 // Older notes above that say A1 mean the SHOWER wall.
 
@@ -89,14 +91,14 @@ export const plan = {
     { letter: 'G', room: 'bath', len: BW, name: 'Bathroom right wall (bedroom door side)',       a: [BL + h, by - h], b: [BL + h, -h], openings: [] },
 
     // SHOWER wall (was A1): the pushed-in bathroom wall behind the shower
-    { letter: 'SHOWER', room: 'closet', len: PW + T, name: 'Pushed-in bathroom wall behind the shower',
+    { letter: 'SHOWER', planned: true, room: 'closet', len: PW + T, name: 'Pushed-in bathroom wall behind the shower',
       a: [-h, pd + h], b: [ax, pd + h], openings: [] },
     // short return from A1 back to the wall A line (not lettered yet)
-    { name: 'Shower return wall (shower end wall)', a: [ax, pd + h], b: [ax, -h], openings: [] },
+    { planned: true, name: 'Shower return wall (shower end wall)', a: [ax, pd + h], b: [ax, -h], openings: [] },
 
     // Wall H (planned): parallel to wall D, from wall C up toward wall A1, with a doorway between it and A1.
     // Drawn in line with the end of wall A1 (60 inside from wall D). That spot and the 32 doorway are assumed.
-    { letter: 'H', room: 'bed', len: W - pd - T - DOOR, name: 'New wall parallel to wall D, doorway at the shower wall end',
+    { letter: 'H', planned: true, room: 'bed', len: W - pd - T - DOOR, name: 'New wall parallel to wall D, doorway at the shower wall end',
       tags: [{ letter: 'H', len: W - pd - T - DOOR, at: (W - pd - T - DOOR) / 2 + h, name: 'New wall parallel to wall D, doorway at the shower wall end' }],
       a: [ax, W + h], b: [ax, pd + h], openings: [
         { type: 'opening', name: 'Doorway between wall H and the shower wall', at: W - pd - T - DOOR + h, w: DOOR, h: 80 },

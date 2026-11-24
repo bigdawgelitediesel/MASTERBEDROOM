@@ -225,7 +225,7 @@ export function createScene(container, plan) {
     const g = new THREE.Group();
     g.position.set(wall.a[0], 0, wall.a[1]);
     g.rotation.y = -Math.atan2(dz, dx);
-    const wm = mat(COLORS.wall);
+    const wm = mat(wall.planned ? 0x7fb4dc : COLORS.wall);
     const piece = (x0, x1, y0, y1) => {
       y1 = Math.min(y1, H);
       if (x1 - x0 < 0.01 || y1 - y0 < 0.01) return;

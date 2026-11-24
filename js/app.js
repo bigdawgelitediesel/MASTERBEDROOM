@@ -76,7 +76,7 @@ function drawPlan() {
     const seg = (d0, d1) => {
       if (d1 - d0 < 0.01) return;
       const [x1, y1] = P(d0), [x2, y2] = P(d1);
-      s += `<line class="wall" stroke-width="${t}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
+      s += `<line class="wall${w.planned ? ' new' : ''}" stroke-width="${t}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
     };
     let cur = 0;
     for (const o of [...(w.openings || [])].sort((a, b) => a.at - b.at)) {
@@ -159,11 +159,11 @@ function drawTables() {
   h += `<tr class="total"><td>Total</td><td></td><td></td><td>${total.toFixed(1)} sq ft</td><td></td></tr></table></div>`;
   h += `<p class="meta">Ceiling height ${ft(plan.ceiling)}. Wall thickness ${plan.wallThickness}".</p>`;
 
-  const lettered = plan.walls.flatMap((w) => tagsOf(w, 0).map((tg) => ({ letter: tg.letter, len: tg.len, name: tg.name || w.name })));
+  const lettered = plan.walls.flatMap((w) => tagsOf(w, 0).map((tg) => ({ letter: tg.letter, len: tg.len, name: tg.name || w.name, planned: w.planned })));
   if (lettered.length) {
-    h += `<h2>Walls</h2><div class="scroll"><table><tr><th>Wall</th><th>Where</th><th>Length</th><th>Inches</th><th>Height</th></tr>`;
+    h += `<h2>Walls</h2><div class="scroll"><table><tr><th>Wall</th><th>Status</th><th>Where</th><th>Length</th><th>Inches</th><th>Height</th></tr>`;
     for (const w of lettered) {
-      h += `<tr><td><b>${esc(w.letter)}</b></td><td>${esc(w.name || '')}</td><td>${w.len ? ft(w.len) : ''}</td><td>${w.len ? w.len + '"' : ''}</td><td>${ft(plan.ceiling)}</td></tr>`;
+      h += `<tr><td><b>${esc(w.letter)}</b></td><td>${w.planned ? '<span class="newtag">New</span>' : 'Existing'}</td><td>${esc(w.name || '')}</td><td>${w.len ? ft(w.len) : ''}</td><td>${w.len ? w.len + '"' : ''}</td><td>${ft(plan.ceiling)}</td></tr>`;
     }
     h += `</table></div>`;
   }
