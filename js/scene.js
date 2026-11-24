@@ -162,6 +162,12 @@ const builders = {
     }
     return g;
   },
+  // wall-mounted TV: mount = height of its bottom edge off the floor
+  tv(f) {
+    const g = new THREE.Group();
+    g.add(box(f.w, f.h || 33, 1.5, mat(0x0c0d10, { roughness: 0.25 }), 0, f.mount || 42, -f.d / 2 + 0.75));
+    return g;
+  },
   box(f) {
     const g = new THREE.Group();
     g.add(box(f.w, f.h || 30, f.d, mat(f.color || 0x8a8f96)));

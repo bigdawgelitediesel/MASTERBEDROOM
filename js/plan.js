@@ -70,13 +70,16 @@ export const plan = {
   walls: [
     { room: 'bed', name: 'Long wall (top)',
       tags: [
-        { letter: 'A', len: 104, at: L - 52 - ax, name: 'Bedroom doorway to wall B' },
+        { letter: 'A', len: 104, at: L - 16 - ax, name: 'Bedroom doorway to wall B' },
       ],
       a: [ax, -h], b: [L + h, -h], openings: [
         { type: 'door', name: 'Bathroom door', label: 'BATH', at: bathDoorX - ax, w: DOOR, h: 80, swing: -1 },
         { type: 'door', name: 'Bedroom door', at: bedDoorX - ax, w: DOOR, h: 80 },
       ] },
-    { letter: 'B', room: 'bed', len: W, name: 'End wall (right)',   a: [L + h, -h],    b: [L + h, W + h], openings: [] },
+    { letter: 'B', room: 'bed', len: W, name: 'End wall (right), window wall', a: [L + h, -h], b: [L + h, W + h], openings: [
+      // There is a window on wall B (he said so). Its size and spot are assumed: 48 x 48, centered, sill at 36.
+      { type: 'window', name: 'Window (size and spot assumed)', at: (W - 48) / 2 + h, w: 48, h: 48, sill: 36 },
+    ] },
     { letter: 'C', room: 'bed', len: L, name: 'Long wall (bottom)', a: [L + h, W + h], b: [-h, W + h],    openings: [] },
     { letter: 'D', room: 'closet', len: W - pd - T, name: 'Closet end wall, shortened by the shower push-in', a: [-h, W + h], b: [-h, pd + h], openings: [] },
 
@@ -109,6 +112,13 @@ export const plan = {
     // Double vanity + mirror (planned), on wall F next to the toilet. 72 wide x 22 deep is assumed, starting 36 off wall E.
     { type: 'vanity', name: 'Double vanity + mirror', x: 36 + 36, y: by + 11, w: 72, d: 22, h: 34.5, rot: 0, sinks: 2, mirrorW: 66, mirrorH: 36,
       note: 'Counter at 34 1/2. Mirror 66 x 36, bottom edge 40 1/2 off the floor, top at 76 1/2' },
+    // Suggested bedroom layout: king bed with its headboard on wall C, TV straight across on wall A.
+    { type: 'bed', name: 'King bed (suggested)', x: 215, y: W - 40, w: 76, d: 80, h: 25, rot: 180,
+      note: 'Headboard on wall C, centered 64 from wall B. 88 of open floor from the foot of the bed to wall A' },
+    { type: 'nightstand', name: 'Nightstand', x: 165, y: W - 9, w: 24, d: 18, h: 24, rot: 180 },
+    { type: 'nightstand', name: 'Nightstand', x: 265, y: W - 9, w: 24, d: 18, h: 24, rot: 180 },
+    { type: 'tv', name: 'TV 65 in (suggested)', x: 215, y: 1.5, w: 57, d: 3, h: 33, mount: 42, rot: 0,
+      note: 'On wall A straight across from the bed. 57 wide x 33 tall, bottom edge 42 off the floor, center at 58 1/2' },
     { type: 'shower', name: 'Shower 60 x 30', x: PW / 2, y: pd - SH / 2, w: PW, d: SH, h: 78, rot: 180, alcove: true,
       note: 'Glass drawn 78 tall' },
   ],
