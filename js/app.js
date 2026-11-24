@@ -50,8 +50,9 @@ function drawPlan() {
   const t = plan.wallThickness;
   const xs = [], ys = [];
   for (const w of plan.walls) { xs.push(w.a[0], w.b[0]); ys.push(w.a[1], w.b[1]); }
-  const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
-  const M = 46;
+  const M = 46 + t;
+  const minX = Math.min(...plan.rooms.map((r) => r.x)), maxX = Math.max(...plan.rooms.map((r) => r.x + r.w));
+  const minY = Math.min(...plan.rooms.map((r) => r.y)), maxY = Math.max(...plan.rooms.map((r) => r.y + r.d));
   let s = `<svg viewBox="${minX - M} ${minY - M} ${maxX - minX + M * 2} ${maxY - minY + M * 2}" xmlns="http://www.w3.org/2000/svg">`;
 
   for (const r of plan.rooms) {
@@ -103,7 +104,7 @@ function drawPlan() {
   }
 
   // overall dimensions
-  const dy = minY - 22, dx = minX - 22;
+  const dy = minY - 24, dx = minX - 24;
   s += `<line class="dim" x1="${minX}" y1="${dy}" x2="${maxX}" y2="${dy}"/>` +
     `<line class="dim" x1="${minX}" y1="${dy - 5}" x2="${minX}" y2="${dy + 5}"/><line class="dim" x1="${maxX}" y1="${dy - 5}" x2="${maxX}" y2="${dy + 5}"/>` +
     `<text class="dimt" x="${(minX + maxX) / 2}" y="${dy - 6}">${ft(maxX - minX)}</text>` +
@@ -139,7 +140,7 @@ function drawTables() {
 // ---------- boot ----------
 document.title = plan.name;
 $('#title').textContent = plan.name;
-if (plan.placeholder) $('#banner').hidden = false;
+if (plan.note) { $('#banner').textContent = plan.note; $('#banner').hidden = false; }
 drawPlan();
 drawTables();
 const start = location.hash.slice(1);
