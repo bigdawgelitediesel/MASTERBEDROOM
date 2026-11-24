@@ -200,10 +200,11 @@ function drawEstimate() {
   const labor = estimate.labor.reduce((a, l) => a + l.cost, 0);
   h += `<h2>Totals</h2><div class="scroll"><table>` +
     `<tr><td>Materials</td><td>${$$(sub)}</td></tr>` +
-    `<tr><td>Waste, sales tax, odds and ends (${Math.round(estimate.extra * 100)}%)</td><td>${$$(extra)}</td></tr>` +
-    `<tr class="total"><td>Do it yourself</td><td>${$$(mat)}</td></tr>`;
+    `<tr><td>${Math.round(estimate.extra * 100)}% over (waste, sales tax, odds and ends)</td><td>${$$(extra)}</td></tr>` +
+    `<tr class="total"><td>Material total with ${Math.round(estimate.extra * 100)}% over</td><td>${$$(mat)}</td></tr>`;
   for (const l of estimate.labor) h += `<tr><td>${esc(l.item)} <span class="meta">(${esc(l.note)})</span></td><td>${$$(l.cost)}</td></tr>`;
-  h += `<tr class="total"><td>Hired out, materials and labor</td><td>${$$(mat + labor)}</td></tr></table></div>`;
+  if (estimate.labor.length) h += `<tr class="total"><td>Hired out, materials and labor</td><td>${$$(mat + labor)}</td></tr>`;
+  h += `</table></div>`;
   h += `<h2>Not included</h2><ul class="meta">${estimate.excluded.map((e) => `<li>${esc(e)}</li>`).join('')}</ul>`;
   $('#estimate').innerHTML = h;
 }

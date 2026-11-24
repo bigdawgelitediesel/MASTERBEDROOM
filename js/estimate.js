@@ -7,7 +7,7 @@ export const estimate = {
   date: '2026-11-24',
   title: 'New walls: SHOWER wall and wall H, with 4 outlets on wall H',
   note: 'Ballpark shelf prices, not quotes. Check them at the store before buying. Quantities come from the drawing, which still has assumed door widths.',
-  extra: 0.15, // waste, sales tax and odds and ends
+  extra: 0.20, // 20% over, per Jacob: covers waste, sales tax and odds and ends
   groups: [
     { name: 'Framing', items: [
       { item: '2x4 x 8 ft stud', qty: 33, each: 4.00, note: 'Both walls: studs at 16 on center, doorway framing, corners, blocking, short plates' },
@@ -39,16 +39,14 @@ export const estimate = {
       { item: 'AFCI breaker', qty: 1, each: 60.00, note: 'Bedroom outlets need arc-fault protection. Skip if the circuit already has it' },
     ] },
   ],
-  labor: [
-    { item: 'Frame, hang, tape, finish and paint both walls', cost: 4000, note: 'Only if you hire it out. Quoted at the high end on purpose' },
-    { item: 'Electrician: 4 outlets and AFCI', cost: 1000, note: 'Only if you hire it out' },
-  ],
+  labor: [], // material only, per Jacob
   excluded: [
     'Tearing out the pushed-in wall that is there today',
     'The shower itself: pan, drain, valve, plumbing, waterproofing, tile, glass',
     'A door for the closet doorway (drawn as an open doorway)',
     'Flooring patch where walls come out or go in',
     'Sound insulation in wall H (optional, about $75)',
+    'Labor (this is a material-only estimate)',
     'Permits',
   ],
 };
