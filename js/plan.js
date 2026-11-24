@@ -99,6 +99,8 @@ export const plan = {
   // Fixtures and furniture. x,y = CENTER. rot = which way its back faces (0 top, 90 right, 180 bottom, 270 left).
   // type: bed | nightstand | dresser | vanity | toilet | tub | shower | closet | box
   fixtures: [
+    // Existing toilet, in the corner of walls E and F. Exact spot and which wall its back is on are assumed (back on F, 18 off E).
+    { type: 'toilet', name: 'Toilet (existing)', x: 18, y: by + 14, w: 20, d: 28, rot: 0 },
     { type: 'shower', name: 'Shower 60 x 30', x: PW / 2, y: pd - SH / 2, w: PW, d: SH, rot: 180, alcove: true },
   ],
 };
