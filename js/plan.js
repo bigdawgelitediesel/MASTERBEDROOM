@@ -10,6 +10,7 @@
 //   That pushed-in wall (A1) ran from wall D until 24 before the BATHROOM door.
 //   SHOWER (planned): standard 60 x 30 along wall A1. To get 60 inside, the return wall moves 4 toward
 //   the bathroom door (20 of wall left before the door instead of 24).
+//   WALL H (planned): new wall parallel to wall D with a doorway between it and wall A1.
 //   For the 30 depth, wall A1 moves further into the bedroom (no wall sticking into the bathroom):
 //   wall E goes from the measured 103 to 114 1/2 and wall D from 149 1/2 to 138.
 //   The bathroom door is on the wall A line (the 84 1/2 depth), not out on the pushed-in wall.
@@ -82,6 +83,14 @@ export const plan = {
       a: [-h, pd + h], b: [ax, pd + h], openings: [] },
     // short return from A1 back to the wall A line (not lettered yet)
     { name: 'A1 return wall (shower end wall)', a: [ax, pd + h], b: [ax, -h], openings: [] },
+
+    // Wall H (planned): parallel to wall D, from wall C up toward wall A1, with a doorway between it and A1.
+    // Drawn in line with the end of wall A1 (60 inside from wall D). That spot and the 32 doorway are assumed.
+    { letter: 'H', room: 'bed', len: W - pd - T - DOOR, name: 'New wall parallel to wall D, doorway at the A1 end',
+      tags: [{ letter: 'H', len: W - pd - T - DOOR, at: (W - pd - T - DOOR) / 2 + h, name: 'New wall parallel to wall D, doorway at the A1 end' }],
+      a: [ax, W + h], b: [ax, pd + h], openings: [
+        { type: 'opening', name: 'Doorway between wall H and wall A1', at: W - pd - T - DOOR + h, w: DOOR, h: 80 },
+      ] },
   ],
 
   // Fixtures and furniture. x,y = CENTER. rot = which way its back faces (0 top, 90 right, 180 bottom, 270 left).
