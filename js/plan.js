@@ -60,9 +60,9 @@ export const plan = {
   fixtures: [],
 };
 
-// Bathroom walls. Its fourth wall is wall A1, shared with the bedroom.
+// Bathroom walls E, F, G. Its fourth wall is wall A1, shared with the bedroom.
 plan.walls.push(
-  { name: 'Bathroom left wall',  a: [-h, -h],          b: [-h, by - h],      openings: [] },
-  { name: 'Bathroom back wall',  a: [-h, by - h],      b: [BL + h, by - h],  openings: [] },
-  { name: 'Bathroom right wall', a: [BL + h, by - h],  b: [BL + h, -h],      openings: [] },
+  { letter: 'E', len: BW, name: 'Bathroom left wall (same side as wall D)', a: [-h, -h],          b: [-h, by - h],      openings: [] },
+  { letter: 'F', len: BL, name: 'Bathroom back wall (across from wall A1)', a: [-h, by - h],      b: [BL + h, by - h],  openings: [] },
+  { letter: 'G', len: BW, name: 'Bathroom right wall (bedroom door side)', a: [BL + h, by - h],  b: [BL + h, -h],      openings: [] },
 );
