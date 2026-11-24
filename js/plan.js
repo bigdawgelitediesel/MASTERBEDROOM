@@ -9,7 +9,9 @@
 //   Wall E is 103, not 84 1/2: the bathroom pushes in past wall A and takes that away from wall D.
 //   That pushed-in wall (A1) ran from wall D until 24 before the BATHROOM door.
 //   SHOWER (planned): standard 60 x 30 along wall A1. To get 60 inside, the return wall moves 4 toward
-//   the bathroom door (20 of wall left before the door instead of 24) and runs on 30 deep as the shower end wall.
+//   the bathroom door (20 of wall left before the door instead of 24).
+//   For the 30 depth, wall A1 moves further into the bedroom (no wall sticking into the bathroom):
+//   wall E goes from the measured 103 to 114 1/2 and wall D from 149 1/2 to 138.
 //   The bathroom door is on the wall A line (the 84 1/2 depth), not out on the pushed-in wall.
 //
 // ASSUMED, not measured yet:
@@ -27,14 +29,15 @@ const h = T / 2;     // walls are drawn centered on a line, so push the line out
                      // to keep the INSIDE faces on the tape numbers
 const L = 279, W = 168;          // bedroom
 const BL = 135.5, BW = 84.5;     // bathroom
-const E = 103;                   // wall E, full length
+const SH = 30;                   // shower depth off wall A1
 const DOOR = 32;
 const bedDoorX = L - 104 - DOOR;             // 143
 const bathDoorX = bedDoorX - 26.5 - DOOR;    // 84 1/2
 const PW = 60;                   // push-in inside width, set to 60 for a standard shower pan (was 56 at 24 before the door)
-const SH = 30;                   // shower depth off wall A1
+
 const by = -(T + BW);            // top inside edge of the bathroom on the plan
-const pd = E - BW - T;           // how far the push-in reaches into the bedroom, inside (14)
+const pd = SH - T;               // how far the push-in reaches into the bedroom, inside (25 1/2; was 14 as measured)
+const E = BW + T + pd;           // wall E, full length (114 1/2 planned; measured today 103)
 const ax = PW + h;                           // where wall A now starts (centerline of the push-in side wall)
 
 export const plan = {
@@ -78,7 +81,7 @@ export const plan = {
     { letter: 'A1', room: 'bed', len: PW + T, name: 'Pushed-in bathroom wall, wall D to 24 before the bathroom door',
       a: [-h, pd + h], b: [ax, pd + h], openings: [] },
     // short return from A1 back to the wall A line (not lettered yet)
-    { name: 'A1 return wall, carried on as the shower end wall', a: [ax, pd + h], b: [ax, pd - SH], openings: [] },
+    { name: 'A1 return wall (shower end wall)', a: [ax, pd + h], b: [ax, -h], openings: [] },
   ],
 
   // Fixtures and furniture. x,y = CENTER. rot = which way its back faces (0 top, 90 right, 180 bottom, 270 left).
