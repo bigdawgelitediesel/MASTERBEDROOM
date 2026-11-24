@@ -8,6 +8,7 @@
 //   wall with window   168
 //   other wall         103 + 108 + 4 1/2 + 23    = 238 1/2
 //   another wall       81 + 3 1/2                = 84 1/2
+//   door on the other wall: edge of door to the window wall = 104
 //
 // HOW THE SHAPE WAS READ (not confirmed yet):
 //   An L. The 279 wall and the 238 1/2 wall run parallel, 168 apart, both starting
@@ -22,7 +23,7 @@ const h = T / 2;     // walls are drawn centered on a line, so push the line out
 
 export const plan = {
   name: 'Master Suite',
-  note: 'First pass from the tape numbers. The L shape is a best read of them and the stub walls and window size are stand-ins. Not confirmed yet.',
+  note: 'First pass from the tape numbers. The L shape is a best read of them and the stub walls, door width and window size are stand-ins. Not confirmed yet.',
   ceiling: 95.25,
   wallThickness: T,
 
@@ -34,7 +35,10 @@ export const plan = {
 
   // Walls run from point a to point b. Openings: at = distance from point a.
   walls: [
-    { name: 'Other wall (238 1/2)',   a: [-h, -h],          b: [238.5 + h, -h],        openings: [] },
+    { name: 'Other wall (238 1/2)',   a: [-h, -h],          b: [238.5 + h, -h],        openings: [
+      // door edge is 104 from the window wall (measured). Width 32 and which edge are stand-ins.
+      { type: 'door', at: 104 + h, w: 32, h: 80 },
+    ] },
     { name: 'Another wall (84 1/2)',  a: [238.5 + h, -h],   b: [238.5 + h, 84.5 - h],  openings: [] },
     { name: 'Jog (40 1/2, figured)',  a: [238.5 + h, 84.5 - h], b: [279 + h, 84.5 - h], openings: [] },
     { name: 'End wall (83 1/2, figured)', a: [279 + h, 84.5 - h], b: [279 + h, 168 + h], openings: [] },
