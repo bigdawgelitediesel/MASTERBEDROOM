@@ -106,8 +106,13 @@ function drawPlan() {
   for (const r of plan.rooms) {
     if (r.quiet) continue;
     const cx = r.x + r.w / 2;
-    s += `<text class="rname" x="${cx}" y="${r.y + r.d / 2 - 2}">${esc(r.name.toUpperCase())}</text>` +
-      `<text class="rdim" x="${cx}" y="${r.y + r.d / 2 + 8}">${ft(r.w)} x ${ft(r.d)}  ·  ${sqft(r).toFixed(0)} sq ft</text>`;
+    const cy = r.y + r.d * (r.labelY || 0.5);
+    s += `<text class="rname" x="${cx}" y="${cy - 2}">${esc((r.label || r.name).toUpperCase())}</text>`;
+    if (r.w < 90) {
+      s += `<text class="rdim" x="${cx}" y="${cy + 8}">${ft(r.w)} x ${ft(r.d)}</text><text class="rdim" x="${cx}" y="${cy + 16}">${sqft(r).toFixed(0)} sq ft</text>`;
+    } else {
+      s += `<text class="rdim" x="${cx}" y="${cy + 8}">${ft(r.w)} x ${ft(r.d)}  ·  ${sqft(r).toFixed(0)} sq ft</text>`;
+    }
   }
 
   // wall letters, just inside each wall
@@ -145,9 +150,10 @@ function drawPlan() {
 
 // ---------- measurements ----------
 function drawTables() {
-  const total = plan.rooms.reduce((a, r) => a + sqft(r), 0);
+  const listed = plan.rooms.filter((r) => !r.hide);
+  const total = listed.reduce((a, r) => a + sqft(r), 0);
   let h = `<h2>Rooms</h2><div class="scroll"><table><tr><th>Room</th><th>Width</th><th>Depth</th><th>Area</th><th>Floor</th></tr>`;
-  for (const r of plan.rooms) {
+  for (const r of listed) {
     h += `<tr><td>${esc(r.name)}</td><td>${ft(r.w)}</td><td>${ft(r.d)}</td><td>${sqft(r).toFixed(1)} sq ft</td><td>${esc(r.floor || '')}</td></tr>`;
   }
   h += `<tr class="total"><td>Total</td><td></td><td></td><td>${total.toFixed(1)} sq ft</td><td></td></tr></table></div>`;

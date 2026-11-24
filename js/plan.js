@@ -11,6 +11,7 @@
 //   SHOWER (planned): standard 60 x 30 along wall A1. To get 60 inside, the return wall moves 4 toward
 //   the bathroom door (20 of wall left before the door instead of 24).
 //   WALL H (planned): new wall parallel to wall D with a doorway between it and wall A1.
+//   The room between wall D and wall H is a WALK-IN CLOSET.
 //   For the 30 depth, wall A1 moves further into the bedroom (no wall sticking into the bathroom):
 //   wall E goes from the measured 103 to 114 1/2 and wall D from 149 1/2 to 138.
 //   The bathroom door is on the wall A line (the 84 1/2 depth), not out on the pushed-in wall.
@@ -52,9 +53,12 @@ export const plan = {
 
   // Floor areas (inside dimensions). x,y = top-left corner, w = width, d = depth.
   // cut = square inches taken out of this room by something pushing into it.
-  // quiet = no name label drawn (small pieces).
+  // quiet = no name label drawn (small pieces). hide = floor only, left out of the tables.
   rooms: [
-    { id: 'bed',  name: 'Master bedroom', x: 0, y: 0,  w: L,  d: W,  floor: 'wood', cut: (PW + T) * (pd + T) },
+    { id: 'bed',  name: 'Master bedroom', x: PW + T, y: 0, w: L - PW - T, d: W, floor: 'wood' },
+    // Walk-in closet: the space between wall D and wall H
+    { id: 'closet', name: 'Walk-in closet', label: 'CLOSET', x: 0, y: pd + T, w: PW, d: W - pd - T, floor: 'wood', labelY: 0.72 },
+    { id: 'sill', name: 'Closet doorway floor', x: PW, y: pd + T, w: T, d: DOOR, floor: 'wood', quiet: true, hide: true },
     { id: 'bath', name: 'Bathroom',       x: 0, y: by, w: BL, d: BW, floor: 'tile' },
     { id: 'push', name: 'Bathroom push-in', x: 0, y: -T, w: PW, d: pd + T, floor: 'tile', quiet: true },
   ],
@@ -74,15 +78,15 @@ export const plan = {
       ] },
     { letter: 'B', room: 'bed', len: W, name: 'End wall (right)',   a: [L + h, -h],    b: [L + h, W + h], openings: [] },
     { letter: 'C', room: 'bed', len: L, name: 'Long wall (bottom)', a: [L + h, W + h], b: [-h, W + h],    openings: [] },
-    { letter: 'D', room: 'bed', len: W - pd - T, name: 'End wall (left), shortened by the push-in', a: [-h, W + h], b: [-h, pd + h], openings: [] },
+    { letter: 'D', room: 'closet', len: W - pd - T, name: 'Closet end wall, shortened by the shower push-in', a: [-h, W + h], b: [-h, pd + h], openings: [] },
 
     // Bathroom. Its fourth side is wall A1, shared with the bedroom.
     { letter: 'E', room: 'bath', len: E,  name: 'Bathroom left wall, runs on down past wall A', a: [-h, pd + h], b: [-h, by - h], openings: [] },
-    { letter: 'F', room: 'bath', len: BL, name: 'Bathroom back wall',      a: [-h, by - h], b: [BL + h, by - h], openings: [] },
+    { room: 'bath', name: 'Bathroom back wall', tags: [{ letter: 'F', len: BL, at: 122 + h, name: 'Bathroom back wall' }],      a: [-h, by - h], b: [BL + h, by - h], openings: [] },
     { letter: 'G', room: 'bath', len: BW, name: 'Bathroom right wall (bedroom door side)',       a: [BL + h, by - h], b: [BL + h, -h], openings: [] },
 
     // SHOWER wall (was A1): the pushed-in bathroom wall behind the shower
-    { letter: 'SHOWER', room: 'bed', len: PW + T, name: 'Pushed-in bathroom wall behind the shower',
+    { letter: 'SHOWER', room: 'closet', len: PW + T, name: 'Pushed-in bathroom wall behind the shower',
       a: [-h, pd + h], b: [ax, pd + h], openings: [] },
     // short return from A1 back to the wall A line (not lettered yet)
     { name: 'Shower return wall (shower end wall)', a: [ax, pd + h], b: [ax, -h], openings: [] },
