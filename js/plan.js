@@ -15,10 +15,10 @@ const T = 4.5;       // wall thickness
 const h = T / 2;     // walls are drawn centered on a line, so push the line out half a wall
                      // to keep the INSIDE faces on the tape numbers
 const L = 279, W = 168;
-// BATHROOM (2026-11-24): 103 wide, 135 1/2 long. It sits on the other side of wall A1.
+// BATHROOM (2026-11-24): 84 1/2 wide (corrected from 103), 135 1/2 long. It sits on the other side of wall A1.
 // The 135 1/2 side is laid along wall A starting at the wall D corner, because the bathroom
-// door (84 1/2 to 116 1/2 along wall A) does not fit inside 103. Not confirmed.
-const BL = 135.5, BW = 103;
+// door (84 1/2 to 116 1/2 along wall A) would land past the end of an 84 1/2 side. Not confirmed.
+const BL = 135.5, BW = 84.5;
 const by = -(T + BW);   // top inside edge of the bathroom on the plan
 
 export const plan = {
