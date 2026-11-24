@@ -240,22 +240,22 @@ export function createScene(container, plan) {
     root = new THREE.Group();
     const H = state.cut ? 42 : plan.ceiling;
 
-    for (const r of plan.rooms) {
+    plan.rooms.forEach((r, ri) => {
       const kind = r.floor || 'wood';
       const base = textures[kind] || (textures[kind] = floorTexture(kind));
       const tex = base.clone(); tex.needsUpdate = true;
       tex.repeat.set(r.w / 48, r.d / 48);
       const m = new THREE.Mesh(new THREE.PlaneGeometry(r.w, r.d), new THREE.MeshStandardMaterial({ map: tex, roughness: kind === 'tile' ? 0.35 : 0.7 }));
       m.rotation.x = -Math.PI / 2;
-      m.position.set(r.x + r.w / 2, 0.05, r.y + r.d / 2);
+      m.position.set(r.x + r.w / 2, 0.05 + ri * 0.03, r.y + r.d / 2);
       m.receiveShadow = true;
       root.add(m);
-      if (state.labels) {
+      if (state.labels && !r.quiet) {
         const s = labelSprite(r.name);
         s.position.set(r.x + r.w / 2, 14, r.y + r.d / 2);
         root.add(s);
       }
-    }
+    });
 
     const corners = new Map();
     for (const w of plan.walls) {
@@ -286,7 +286,7 @@ export function createScene(container, plan) {
   }
 
   function view(name) {
-    const room = plan.rooms.find((r) => r.id === name);
+    const room = plan.rooms.find((r) => r.id === name && !r.quiet);
     if (room) {
       const tx = room.x + room.w / 2, tz = room.y + room.d / 2, s = Math.max(room.w, room.d);
       controls.target.set(tx, 30, tz);

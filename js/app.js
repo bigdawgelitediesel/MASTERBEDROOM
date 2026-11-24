@@ -9,7 +9,7 @@ export function ft(inches) {
   const f = Math.floor(q / 12), i = +(q - f * 12).toFixed(2);
   return `${f}' ${i}"`;
 }
-const sqft = (r) => (r.w * r.d) / 144;
+const sqft = (r) => (r.w * r.d - (r.cut || 0)) / 144;
 // a wall's name tags: either its single letter or its list of split pieces
 const tagsOf = (w, L) => w.tags || (w.letter ? [{ letter: w.letter, len: w.len, at: L / 2, name: w.name }] : []);
 
@@ -33,7 +33,7 @@ async function show(tab) {
 document.querySelectorAll('.tab').forEach((b) => b.addEventListener('click', () => show(b.dataset.tab)));
 
 // ---------- 3D controls ----------
-const views = [['overview', 'Overview'], ['top', 'Top down'], ...plan.rooms.map((r) => [r.id, r.name])];
+const views = [['overview', 'Overview'], ['top', 'Top down'], ...plan.rooms.filter((r) => !r.quiet).map((r) => [r.id, r.name])];
 $('#views').innerHTML = views.map(([id, n]) => `<button data-view="${id}">${esc(n)}</button>`).join('');
 $('#views').addEventListener('click', (e) => {
   const v = e.target.dataset.view;
@@ -104,6 +104,7 @@ function drawPlan() {
   }
 
   for (const r of plan.rooms) {
+    if (r.quiet) continue;
     const cx = r.x + r.w / 2;
     s += `<text class="rname" x="${cx}" y="${r.y + r.d / 2 - 2}">${esc(r.name.toUpperCase())}</text>` +
       `<text class="rdim" x="${cx}" y="${r.y + r.d / 2 + 8}">${ft(r.w)} x ${ft(r.d)}  ·  ${sqft(r).toFixed(0)} sq ft</text>`;
