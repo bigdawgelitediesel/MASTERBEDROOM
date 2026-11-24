@@ -83,3 +83,8 @@ td.wrap { white-space: normal; min-width: 220px; color: var(--dim); font-size: 1
 #estimate { max-width: 900px; margin: 0 auto; }
 #estimate ul { padding-left: 20px; }
 nav { flex-wrap: wrap; }
+.bigtotal { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; background: var(--panel); border: 1px solid var(--brass); border-radius: 12px; padding: 16px 20px; margin: 8px 0 10px; }
+.bigtotal span { color: var(--dim); letter-spacing: .12em; text-transform: uppercase; font-size: 13px; }
+.bigtotal b { color: var(--brass); font-size: 30px; }
+.cover { margin-bottom: 12px; }
+.cover th:first-child { color: var(--brass); }
