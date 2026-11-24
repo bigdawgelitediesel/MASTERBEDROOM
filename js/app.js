@@ -116,10 +116,12 @@ function drawPlan() {
     for (const tg of tagsOf(w, L)) {
     const mx = w.a[0] + dx * tg.at / L, my = w.a[1] + dy * tg.at / L;
     let nx = -dy / L, ny = dx / L;
-    if (nx * (pcx - mx) + ny * (pcy - my) < 0) { nx = -nx; ny = -ny; }
+    const home = plan.rooms.find((r) => r.id === w.room);
+    const hx = home ? home.x + home.w / 2 : pcx, hy = home ? home.y + home.d / 2 : pcy;
+    if (nx * (hx - mx) + ny * (hy - my) < 0) { nx = -nx; ny = -ny; }
     const lx = mx + nx * 17, ly = my + ny * 17;
     s += `<circle class="wtag" cx="${lx}" cy="${ly}" r="${tg.letter.length > 1 ? 9.5 : 8}"/><text class="wtagt" x="${lx}" y="${ly + 3.6}">${esc(tg.letter)}</text>`;
-    if (tg.len) s += `<text class="wlen" x="${lx + nx * 23}" y="${ly + ny * 15 + 2.2}">${ft(tg.len)}</text>`;
+    if (tg.len) s += `<text class="wlen" x="${lx}" y="${ly + (Math.abs(ny) > 0.5 ? ny : 1) * 15 + 2.2}">${ft(tg.len)}</text>`;
     }
   }
 

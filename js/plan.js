@@ -38,7 +38,7 @@ export const plan = {
   // Lettered clockwise looking down: A top, B right, C bottom, D left.
   // Openings go in the openings list: { type: 'door' | 'window', at, w, h, sill }, at = distance from point a.
   walls: [
-    { name: 'Long wall (top)',
+    { room: 'bed', name: 'Long wall (top)',
       // split at the doorway: A1 runs from wall D to the doorway, A2 from the doorway to wall B
       tags: [
         { letter: 'A1', len: L - 104 - 32, at: (L - 104 - 32) / 2 + h, name: 'Wall D to the doorway' },
@@ -49,9 +49,9 @@ export const plan = {
       // bathroom is off wall A1. Door to door = 26 1/2 (measured). Width 32 is a stand-in. Swings into the bathroom.
       { type: 'door', name: 'Bathroom door', label: 'BATH', at: L - 104 - 32 - 26.5 - 32 + h, w: 32, h: 80, swing: -1 },
     ] },
-    { letter: 'B', len: W, name: 'End wall (right)',   a: [L + h, -h],     b: [L + h, W + h],  openings: [] },
-    { letter: 'C', len: L, name: 'Long wall (bottom)', a: [L + h, W + h],  b: [-h, W + h],     openings: [] },
-    { letter: 'D', len: W, name: 'End wall (left)',    a: [-h, W + h],     b: [-h, -h],        openings: [] },
+    { letter: 'B', room: 'bed', len: W, name: 'End wall (right)',   a: [L + h, -h],     b: [L + h, W + h],  openings: [] },
+    { letter: 'C', room: 'bed', len: L, name: 'Long wall (bottom)', a: [L + h, W + h],  b: [-h, W + h],     openings: [] },
+    { letter: 'D', room: 'bed', len: W, name: 'End wall (left)',    a: [-h, W + h],     b: [-h, -h],        openings: [] },
   ],
 
   // (bathroom walls are appended below the plan object)
@@ -62,7 +62,7 @@ export const plan = {
 
 // Bathroom walls E, F, G. Its fourth wall is wall A1, shared with the bedroom.
 plan.walls.push(
-  { letter: 'E', len: BW, name: 'Bathroom left wall (same side as wall D)', a: [-h, -h],          b: [-h, by - h],      openings: [] },
-  { letter: 'F', len: BL, name: 'Bathroom back wall (across from wall A1)', a: [-h, by - h],      b: [BL + h, by - h],  openings: [] },
-  { letter: 'G', len: BW, name: 'Bathroom right wall (bedroom door side)', a: [BL + h, by - h],  b: [BL + h, -h],      openings: [] },
+  { letter: 'E', room: 'bath', len: BW, name: 'Bathroom left wall (same side as wall D)', a: [-h, -h],          b: [-h, by - h],      openings: [] },
+  { letter: 'F', room: 'bath', len: BL, name: 'Bathroom back wall (across from wall A1)', a: [-h, by - h],      b: [BL + h, by - h],  openings: [] },
+  { letter: 'G', room: 'bath', len: BW, name: 'Bathroom right wall (bedroom door side)', a: [BL + h, by - h],  b: [BL + h, -h],      openings: [] },
 );
