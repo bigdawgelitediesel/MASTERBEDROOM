@@ -39,7 +39,9 @@ export const plan = {
         { letter: 'A2', len: 104,          at: L - 52 + h,             name: 'Doorway to wall B' },
       ],    a: [-h, -h],        b: [L + h, -h],     openings: [
       // doorway edge to wall B = 104 (measured). Standard doorway drawn 32 wide x 80 tall, on the far side of that mark from B.
-      { type: 'door', at: L - 104 - 32 + h, w: 32, h: 80 },
+      { type: 'door', name: 'Bedroom door', at: L - 104 - 32 + h, w: 32, h: 80 },
+      // bathroom is off wall A1. Door to door = 26 1/2 (measured). Width 32 is a stand-in. Swings into the bathroom.
+      { type: 'door', name: 'Bathroom door', label: 'BATH', at: L - 104 - 32 - 26.5 - 32 + h, w: 32, h: 80, swing: -1 },
     ] },
     { letter: 'B', len: W, name: 'End wall (right)',   a: [L + h, -h],     b: [L + h, W + h],  openings: [] },
     { letter: 'C', len: L, name: 'Long wall (bottom)', a: [L + h, W + h],  b: [-h, W + h],     openings: [] },

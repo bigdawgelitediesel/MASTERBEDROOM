@@ -90,6 +90,10 @@ function drawPlan() {
         const [ex, ey] = P(o.at, o.w * sw);
         s += `<path class="swing" d="M${x1} ${y1} L${ex} ${ey} A${o.w} ${o.w} 0 0 ${sw === 1 ? 0 : 1} ${x2} ${y2}"/>`;
       }
+      if (o.label) {
+        const [tx, ty] = P(o.at + o.w / 2, (o.swing === -1 ? 1 : -1) * (t / 2 + 8));
+        s += `<text class="olabel" x="${tx}" y="${ty + 2}">${esc(o.label)}</text>`;
+      }
       cur = o.at + o.w;
     }
     seg(cur, L);
@@ -152,7 +156,7 @@ function drawTables() {
 
   h += `<h2>Doors and windows</h2><div class="scroll"><table><tr><th>Wall</th><th>Type</th><th>Width</th><th>Height</th><th>Sill</th><th>From wall start</th></tr>`;
   for (const w of plan.walls) for (const o of w.openings || []) {
-    h += `<tr><td>${esc(w.letter ? 'Wall ' + w.letter : w.tags ? 'Wall ' + w.tags[0].letter.replace(/\d+$/, '') : w.name || '')}</td><td>${esc(o.type)}</td><td>${ft(o.w)}</td><td>${ft(o.h)}</td><td>${o.type === 'window' ? ft(o.sill || 0) : ''}</td><td>${ft(o.at)}</td></tr>`;
+    h += `<tr><td>${esc(w.letter ? 'Wall ' + w.letter : w.tags ? 'Wall ' + w.tags[0].letter.replace(/\d+$/, '') : w.name || '')}</td><td>${esc(o.name || o.type)}</td><td>${ft(o.w)}</td><td>${ft(o.h)}</td><td>${o.type === 'window' ? ft(o.sill || 0) : ''}</td><td>${ft(o.at)}</td></tr>`;
   }
   h += `</table></div>`;
 
