@@ -264,7 +264,7 @@ export function createScene(container, plan) {
         const wl = Math.hypot(w.b[0] - w.a[0], w.b[1] - w.a[1]);
         for (const tg of w.tags || (w.letter ? [{ letter: w.letter, at: wl / 2 }] : [])) {
           const k = tg.at / wl;
-          const s = labelSprite('Wall ' + tg.letter);
+          const s = labelSprite(tg.letter.length > 2 ? tg.letter[0] + tg.letter.slice(1).toLowerCase() + ' wall' : 'Wall ' + tg.letter);
           s.position.set(w.a[0] + (w.b[0] - w.a[0]) * k, H + 12, w.a[1] + (w.b[1] - w.a[1]) * k);
           root.add(s);
         }

@@ -25,6 +25,9 @@
 //   other wall 103 + 108 + 4 1/2 + 23; another wall 81 + 3 1/2;
 //   facing the bedroom door from outside, the window wall is on the left.
 
+// NAMES (2026-11-24): the wall that was A1 is now called SHOWER, and A2 is now just A.
+// Older notes above that say A1 mean the SHOWER wall.
+
 const T = 4.5;       // wall thickness
 const h = T / 2;     // walls are drawn centered on a line, so push the line out half a wall
                      // to keep the INSIDE faces on the tape numbers
@@ -63,7 +66,7 @@ export const plan = {
   walls: [
     { room: 'bed', name: 'Long wall (top)',
       tags: [
-        { letter: 'A2', len: 104, at: L - 52 - ax, name: 'Bedroom doorway to wall B' },
+        { letter: 'A', len: 104, at: L - 52 - ax, name: 'Bedroom doorway to wall B' },
       ],
       a: [ax, -h], b: [L + h, -h], openings: [
         { type: 'door', name: 'Bathroom door', label: 'BATH', at: bathDoorX - ax, w: DOOR, h: 80, swing: -1 },
@@ -75,21 +78,21 @@ export const plan = {
 
     // Bathroom. Its fourth side is wall A1, shared with the bedroom.
     { letter: 'E', room: 'bath', len: E,  name: 'Bathroom left wall, runs on down past wall A', a: [-h, pd + h], b: [-h, by - h], openings: [] },
-    { letter: 'F', room: 'bath', len: BL, name: 'Bathroom back wall (across from wall A1)',      a: [-h, by - h], b: [BL + h, by - h], openings: [] },
+    { letter: 'F', room: 'bath', len: BL, name: 'Bathroom back wall',      a: [-h, by - h], b: [BL + h, by - h], openings: [] },
     { letter: 'G', room: 'bath', len: BW, name: 'Bathroom right wall (bedroom door side)',       a: [BL + h, by - h], b: [BL + h, -h], openings: [] },
 
-    // Wall A1: the pushed-in bathroom wall, from wall D to 24 before the bathroom door
-    { letter: 'A1', room: 'bed', len: PW + T, name: 'Pushed-in bathroom wall, wall D to 24 before the bathroom door',
+    // SHOWER wall (was A1): the pushed-in bathroom wall behind the shower
+    { letter: 'SHOWER', room: 'bed', len: PW + T, name: 'Pushed-in bathroom wall behind the shower',
       a: [-h, pd + h], b: [ax, pd + h], openings: [] },
     // short return from A1 back to the wall A line (not lettered yet)
-    { name: 'A1 return wall (shower end wall)', a: [ax, pd + h], b: [ax, -h], openings: [] },
+    { name: 'Shower return wall (shower end wall)', a: [ax, pd + h], b: [ax, -h], openings: [] },
 
     // Wall H (planned): parallel to wall D, from wall C up toward wall A1, with a doorway between it and A1.
     // Drawn in line with the end of wall A1 (60 inside from wall D). That spot and the 32 doorway are assumed.
-    { letter: 'H', room: 'bed', len: W - pd - T - DOOR, name: 'New wall parallel to wall D, doorway at the A1 end',
-      tags: [{ letter: 'H', len: W - pd - T - DOOR, at: (W - pd - T - DOOR) / 2 + h, name: 'New wall parallel to wall D, doorway at the A1 end' }],
+    { letter: 'H', room: 'bed', len: W - pd - T - DOOR, name: 'New wall parallel to wall D, doorway at the shower wall end',
+      tags: [{ letter: 'H', len: W - pd - T - DOOR, at: (W - pd - T - DOOR) / 2 + h, name: 'New wall parallel to wall D, doorway at the shower wall end' }],
       a: [ax, W + h], b: [ax, pd + h], openings: [
-        { type: 'opening', name: 'Doorway between wall H and wall A1', at: W - pd - T - DOOR + h, w: DOOR, h: 80 },
+        { type: 'opening', name: 'Doorway between wall H and the shower wall', at: W - pd - T - DOOR + h, w: DOOR, h: 80 },
       ] },
   ],
 
