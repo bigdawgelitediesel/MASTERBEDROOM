@@ -113,7 +113,9 @@ const builders = {
       g.add(box(18, 0.4, 13, mat(0xffffff, { roughness: 0.2 }), x, h, 1));
       g.add(box(1.2, 6, 1.2, mat(COLORS.chrome, { metalness: 0.8, roughness: 0.3 }), x, h, -d / 2 + 3));
     }
-    g.add(box(f.mirrorW || w - 6, f.mirrorH || 36, 0.8, mat(COLORS.mirror, { metalness: 0.9, roughness: 0.08 }), 0, h + 6, -d / 2 + 0.4));
+    const mw = f.mirrorW || w - 6, mh = f.mirrorH || 36;
+    g.add(box(mw + 3, mh + 3, 0.8, mat(0x2b2f36), 0, h + 4.5, -d / 2 + 0.4));
+    g.add(box(mw, mh, 0.5, mat(0xbfe3f2, { roughness: 0.1, emissive: 0x3a6f86 }), 0, h + 6, -d / 2 + 1));
     return g;
   },
   // Standard two-piece toilet: tank 18 wide, 29 to the tank top, bowl 14 1/2 wide, rim at 16, 28 front to back.
@@ -165,7 +167,8 @@ const builders = {
   // wall-mounted TV: mount = height of its bottom edge off the floor
   tv(f) {
     const g = new THREE.Group();
-    g.add(box(f.w, f.h || 33, 1.5, mat(0x0c0d10, { roughness: 0.25 }), 0, f.mount || 42, -f.d / 2 + 0.75));
+    g.add(box(f.w + 2, (f.h || 33) + 2, 1.5, mat(0x9aa1a9, { roughness: 0.4 }), 0, (f.mount || 42) - 1, -f.d / 2 + 0.75));
+    g.add(box(f.w, f.h || 33, 0.5, mat(0x1d3550, { roughness: 0.2, emissive: 0x17406b }), 0, f.mount || 42, -f.d / 2 + 1.75));
     return g;
   },
   box(f) {
@@ -183,7 +186,7 @@ export function createScene(container, plan) {
   container.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x14171c);
+  scene.background = new THREE.Color(0xdde2e8);
   const camera = new THREE.PerspectiveCamera(45, 1, 1, 20000);
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
@@ -207,7 +210,7 @@ export function createScene(container, plan) {
   sun.shadow.bias = -0.0005;
   scene.add(sun, sun.target);
 
-  const slab = new THREE.Mesh(new THREE.PlaneGeometry(R * 6, R * 6), mat(0x1a1d22));
+  const slab = new THREE.Mesh(new THREE.PlaneGeometry(R * 6, R * 6), mat(0xc4c9cf));
   slab.rotation.x = -Math.PI / 2; slab.position.set(cx, -0.5, cz); slab.receiveShadow = true;
   scene.add(slab);
 

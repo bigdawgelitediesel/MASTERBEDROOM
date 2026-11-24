@@ -39,7 +39,7 @@ main { flex: 1; min-height: 0; position: relative; }
 .hud button.on { background: var(--brass); }
 #views { top: 12px; }
 #toggles { bottom: 12px; }
-.hint { position: absolute; right: 12px; bottom: 14px; color: var(--dim); font-size: 12px; pointer-events: none; }
+.hint { position: absolute; right: 12px; bottom: 14px; color: #4b535d; font-size: 12px; pointer-events: none; }
 @media (max-width: 640px) { .hint { display: none; } }
 
 #p-plan { overflow: auto; padding: 12px; }
