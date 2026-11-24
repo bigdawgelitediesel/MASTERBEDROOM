@@ -31,7 +31,10 @@ export const plan = {
   // Lettered clockwise looking down: A top, B right, C bottom, D left.
   // Openings go in the openings list: { type: 'door' | 'window', at, w, h, sill }, at = distance from point a.
   walls: [
-    { letter: 'A', len: L, name: 'Long wall (top)',    a: [-h, -h],        b: [L + h, -h],     openings: [] },
+    { letter: 'A', len: L, name: 'Long wall (top)',    a: [-h, -h],        b: [L + h, -h],     openings: [
+      // doorway edge to wall B = 104 (measured). Standard doorway drawn 32 wide x 80 tall, on the far side of that mark from B.
+      { type: 'door', at: L - 104 - 32 + h, w: 32, h: 80 },
+    ] },
     { letter: 'B', len: W, name: 'End wall (right)',   a: [L + h, -h],     b: [L + h, W + h],  openings: [] },
     { letter: 'C', len: L, name: 'Long wall (bottom)', a: [L + h, W + h],  b: [-h, W + h],     openings: [] },
     { letter: 'D', len: W, name: 'End wall (left)',    a: [-h, W + h],     b: [-h, -h],        openings: [] },
