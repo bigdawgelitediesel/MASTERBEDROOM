@@ -169,7 +169,7 @@ function drawTables() {
     h += `</table></div>`;
   }
 
-  h += `<h2>Doors and windows</h2><div class="scroll"><table><tr><th>Wall</th><th>Type</th><th>Width</th><th>Height</th><th>Sill</th><th>From wall start</th></tr>`;
+  h += `<h2>Doors and windows</h2><div class="scroll"><table><tr><th>Wall</th><th>Type</th><th>Width</th><th>Height</th><th>Sill</th><th>Position along wall</th></tr>`;
   for (const w of plan.walls) for (const o of w.openings || []) {
     h += `<tr><td>${esc(w.letter ? 'Wall ' + w.letter : w.tags ? 'Wall ' + w.tags[0].letter.replace(/\d+$/, '') : w.name || '')}</td><td>${esc(o.name || o.type)}</td><td>${ft(o.w)}</td><td>${ft(o.h)}</td><td>${o.type === 'window' ? ft(o.sill || 0) : ''}</td><td>${ft(o.at)}</td></tr>`;
   }
