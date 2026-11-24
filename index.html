@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Master Suite</title>
+<link rel="stylesheet" href="css/style.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<header>
+  <h1 id="title">Master Suite</h1>
+  <nav>
+    <button class="tab" data-tab="3d">3D</button>
+    <button class="tab" data-tab="plan">Floor plan</button>
+    <button class="tab" data-tab="measure">Measurements</button>
+  </nav>
+</header>
+<div id="banner" hidden>Stand-in layout. These are placeholder numbers until the real tape measurements go in.</div>
+<main>
+  <section class="panel" id="p-3d">
+    <div id="stage"><div id="stage-msg">Loading 3D...</div></div>
+    <div class="hud" id="views"></div>
+    <div class="hud" id="toggles">
+      <button data-toggle="cut" class="on">Cut walls</button>
+      <button data-toggle="furniture" class="on">Furniture</button>
+      <button data-toggle="labels" class="on">Labels</button>
+    </div>
+    <div class="hint">Drag to orbit. Scroll or pinch to zoom. Right-drag to pan.</div>
+  </section>
+  <section class="panel" id="p-plan"><div id="plan"></div></section>
+  <section class="panel" id="p-measure"><div id="tables"></div></section>
+</main>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
