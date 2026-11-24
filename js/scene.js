@@ -252,7 +252,7 @@ export function createScene(container, plan) {
       root.add(m);
       if (state.labels) {
         const s = labelSprite(r.name);
-        s.position.set(r.x + r.w / 2, H + 14, r.y + r.d / 2);
+        s.position.set(r.x + r.w / 2, 14, r.y + r.d / 2);
         root.add(s);
       }
     }
@@ -260,6 +260,11 @@ export function createScene(container, plan) {
     const corners = new Map();
     for (const w of plan.walls) {
       root.add(buildWall(w, H));
+      if (state.labels && w.letter) {
+        const s = labelSprite('Wall ' + w.letter);
+        s.position.set((w.a[0] + w.b[0]) / 2, H + 12, (w.a[1] + w.b[1]) / 2);
+        root.add(s);
+      }
       for (const p of [w.a, w.b]) corners.set(p.join(','), p);
     }
     const t = plan.wallThickness;

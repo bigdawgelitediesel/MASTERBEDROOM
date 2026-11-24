@@ -99,8 +99,21 @@ function drawPlan() {
 
   for (const r of plan.rooms) {
     const cx = r.x + r.w / 2;
-    s += `<text class="rname" x="${cx}" y="${r.y + 14}">${esc(r.name.toUpperCase())}</text>` +
-      `<text class="rdim" x="${cx}" y="${r.y + 23}">${ft(r.w)} x ${ft(r.d)}  ·  ${sqft(r).toFixed(0)} sq ft</text>`;
+    s += `<text class="rname" x="${cx}" y="${r.y + r.d / 2 - 2}">${esc(r.name.toUpperCase())}</text>` +
+      `<text class="rdim" x="${cx}" y="${r.y + r.d / 2 + 8}">${ft(r.w)} x ${ft(r.d)}  ·  ${sqft(r).toFixed(0)} sq ft</text>`;
+  }
+
+  // wall letters, just inside each wall
+  const pcx = (minX + maxX) / 2, pcy = (minY + maxY) / 2;
+  for (const w of plan.walls) {
+    if (!w.letter) continue;
+    const mx = (w.a[0] + w.b[0]) / 2, my = (w.a[1] + w.b[1]) / 2;
+    const dx = w.b[0] - w.a[0], dy = w.b[1] - w.a[1], L = Math.hypot(dx, dy);
+    let nx = -dy / L, ny = dx / L;
+    if (nx * (pcx - mx) + ny * (pcy - my) < 0) { nx = -nx; ny = -ny; }
+    const lx = mx + nx * 17, ly = my + ny * 17;
+    s += `<circle class="wtag" cx="${lx}" cy="${ly}" r="8"/><text class="wtagt" x="${lx}" y="${ly + 3.6}">${esc(w.letter)}</text>`;
+    if (w.len) s += `<text class="wlen" x="${lx + nx * 23}" y="${ly + ny * 15 + 2.2}">${ft(w.len)}</text>`;
   }
 
   // overall dimensions
@@ -125,9 +138,18 @@ function drawTables() {
   h += `<tr class="total"><td>Total</td><td></td><td></td><td>${total.toFixed(1)} sq ft</td><td></td></tr></table></div>`;
   h += `<p class="meta">Ceiling height ${ft(plan.ceiling)}. Wall thickness ${plan.wallThickness}".</p>`;
 
+  const lettered = plan.walls.filter((w) => w.letter);
+  if (lettered.length) {
+    h += `<h2>Walls</h2><div class="scroll"><table><tr><th>Wall</th><th>Where</th><th>Length</th><th>Inches</th><th>Height</th></tr>`;
+    for (const w of lettered) {
+      h += `<tr><td><b>${esc(w.letter)}</b></td><td>${esc(w.name || '')}</td><td>${w.len ? ft(w.len) : ''}</td><td>${w.len ? w.len + '"' : ''}</td><td>${ft(plan.ceiling)}</td></tr>`;
+    }
+    h += `</table></div>`;
+  }
+
   h += `<h2>Doors and windows</h2><div class="scroll"><table><tr><th>Wall</th><th>Type</th><th>Width</th><th>Height</th><th>Sill</th><th>From wall start</th></tr>`;
   for (const w of plan.walls) for (const o of w.openings || []) {
-    h += `<tr><td>${esc(w.name || '')}</td><td>${esc(o.type)}</td><td>${ft(o.w)}</td><td>${ft(o.h)}</td><td>${o.type === 'window' ? ft(o.sill || 0) : ''}</td><td>${ft(o.at)}</td></tr>`;
+    h += `<tr><td>${esc(w.letter ? 'Wall ' + w.letter : w.name || '')}</td><td>${esc(o.type)}</td><td>${ft(o.w)}</td><td>${ft(o.h)}</td><td>${o.type === 'window' ? ft(o.sill || 0) : ''}</td><td>${ft(o.at)}</td></tr>`;
   }
   h += `</table></div>`;
 
