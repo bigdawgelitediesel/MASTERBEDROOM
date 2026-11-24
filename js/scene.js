@@ -296,7 +296,7 @@ export function createScene(container, plan) {
       camera.position.set(cx, R * 1.55, cz + 0.5);
     } else {
       controls.target.set(cx, 20, cz);
-      camera.position.set(cx - R * 0.45, R * 0.95, cz + R * 1.0);
+      camera.position.set(cx - R * 0.5, R * 1.1, cz + R * 1.2);
     }
     controls.update();
   }
