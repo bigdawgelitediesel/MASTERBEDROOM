@@ -168,8 +168,8 @@ function drawTables() {
   }
   h += `</table></div>`;
 
-  h += `<h2>Fixtures and furniture</h2><div class="scroll"><table><tr><th>Item</th><th>Width</th><th>Depth</th></tr>`;
-  for (const f of plan.fixtures || []) h += `<tr><td>${esc(f.name || f.type)}</td><td>${ft(f.w)}</td><td>${ft(f.d)}</td></tr>`;
+  h += `<h2>Fixtures and furniture</h2><div class="scroll"><table><tr><th>Item</th><th>Width</th><th>Depth</th><th>Height</th><th>Notes</th></tr>`;
+  for (const f of plan.fixtures || []) h += `<tr><td>${esc(f.name || f.type)}</td><td>${f.w}"</td><td>${f.d}"</td><td>${f.h ? f.h + '"' : ''}</td><td class="wrap">${esc(f.note || '')}</td></tr>`;
   h += `</table></div>`;
   $('#tables').innerHTML = h;
 }

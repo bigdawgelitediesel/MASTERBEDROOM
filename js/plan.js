@@ -100,9 +100,12 @@ export const plan = {
   // type: bed | nightstand | dresser | vanity | toilet | tub | shower | closet | box
   fixtures: [
     // Existing toilet, in the corner of walls E and F. Exact spot and which wall its back is on are assumed (back on F, 18 off E).
-    { type: 'toilet', name: 'Toilet (existing)', x: 18, y: by + 14, w: 20, d: 28, rot: 0 },
+    { type: 'toilet', name: 'Toilet (existing)', x: 18, y: by + 14, w: 18, d: 28, h: 29, rot: 0,
+      note: 'Standard two-piece: tank 18 wide, 29 to tank top, seat at 16 to 17, 28 front to back' },
     // Double vanity + mirror (planned), on wall F next to the toilet. 72 wide x 22 deep is assumed, starting 36 off wall E.
-    { type: 'vanity', name: 'Double vanity + mirror', x: 36 + 36, y: by + 11, w: 72, d: 22, rot: 0, sinks: 2 },
-    { type: 'shower', name: 'Shower 60 x 30', x: PW / 2, y: pd - SH / 2, w: PW, d: SH, rot: 180, alcove: true },
+    { type: 'vanity', name: 'Double vanity + mirror', x: 36 + 36, y: by + 11, w: 72, d: 22, h: 34.5, rot: 0, sinks: 2, mirrorW: 66, mirrorH: 36,
+      note: 'Counter at 34 1/2. Mirror 66 x 36, bottom edge 40 1/2 off the floor, top at 76 1/2' },
+    { type: 'shower', name: 'Shower 60 x 30', x: PW / 2, y: pd - SH / 2, w: PW, d: SH, h: 78, rot: 180, alcove: true,
+      note: 'Glass drawn 78 tall' },
   ],
 };

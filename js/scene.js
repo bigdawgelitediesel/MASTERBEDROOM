@@ -104,7 +104,7 @@ const builders = {
     return g;
   },
   vanity(f) {
-    const g = new THREE.Group(), { w, d } = f, h = f.h || 34;
+    const g = new THREE.Group(), { w, d } = f, h = f.h || 34.5;
     g.add(box(w, h - 1.5, d, mat(COLORS.cabinet)));
     g.add(box(w + 1, 1.5, d + 1, mat(COLORS.stone, { roughness: 0.3 }), 0, h - 1.5, 0.5));
     const n = f.sinks || 1;
@@ -113,17 +113,24 @@ const builders = {
       g.add(box(18, 0.4, 13, mat(0xffffff, { roughness: 0.2 }), x, h, 1));
       g.add(box(1.2, 6, 1.2, mat(COLORS.chrome, { metalness: 0.8, roughness: 0.3 }), x, h, -d / 2 + 3));
     }
-    g.add(box(w - 6, 34, 0.8, mat(COLORS.mirror, { metalness: 0.9, roughness: 0.08 }), 0, h + 8, -d / 2 + 0.4));
+    g.add(box(f.mirrorW || w - 6, f.mirrorH || 36, 0.8, mat(COLORS.mirror, { metalness: 0.9, roughness: 0.08 }), 0, h + 6, -d / 2 + 0.4));
     return g;
   },
+  // Standard two-piece toilet: tank 18 wide, 29 to the tank top, bowl 14 1/2 wide, rim at 16, 28 front to back.
   toilet(f) {
-    const g = new THREE.Group(), { w, d } = f;
-    g.add(box(w - 2, 28, 8, mat(COLORS.white, { roughness: 0.25 }), 0, 0, -d / 2 + 4));
-    const bowl = new THREE.Mesh(new THREE.CylinderGeometry(w / 2 - 1, w / 2 - 3, 15, 28), mat(COLORS.white, { roughness: 0.25 }));
-    bowl.scale.z = (d - 8) / (w - 2);
-    bowl.position.set(0, 7.5, -d / 2 + 8 + (d - 8) / 2);
+    const g = new THREE.Group(), { w, d } = f, H = f.h || 29, rim = f.rim || 16, bw = 14.5;
+    const white = mat(COLORS.white, { roughness: 0.25 });
+    g.add(box(w, H - rim + 2, 8, white, 0, rim - 2, -d / 2 + 4));
+    g.add(box(10, rim - 2, 9, white, 0, 0, -d / 2 + 4.5));
+    const bl = d - 8;
+    const bowl = new THREE.Mesh(new THREE.CylinderGeometry(bw / 2, 4.5, rim, 28), white);
+    bowl.scale.z = bl / bw;
+    bowl.position.set(0, rim / 2, -d / 2 + 8 + bl / 2);
     bowl.castShadow = true;
-    g.add(bowl);
+    const seat = new THREE.Mesh(new THREE.CylinderGeometry(bw / 2 + 0.3, bw / 2 + 0.3, 1, 28), mat(0xe6e6e1, { roughness: 0.4 }));
+    seat.scale.z = bl / bw;
+    seat.position.set(0, rim + 0.5, -d / 2 + 8 + bl / 2);
+    g.add(bowl, seat);
     return g;
   },
   tub(f) {
