@@ -79,3 +79,7 @@ td.wrap { white-space: normal; min-width: 220px; color: var(--dim); font-size: 1
 .legend .sw.ex { background: #ece8e0; margin-left: 0; } .legend .sw.nw { background: #6fb1dc; }
 .legend.l3d { position: absolute; right: 12px; top: 14px; background: rgba(20, 23, 28, .82); color: #ece8e0; padding: 5px 12px; border-radius: 999px; pointer-events: none; }
 @media (max-width: 640px) { .legend.l3d { top: auto; bottom: 52px; right: auto; left: 12px; } }
+#p-estimate { overflow: auto; padding: 8px 16px 40px; }
+#estimate { max-width: 900px; margin: 0 auto; }
+#estimate ul { padding-left: 20px; }
+nav { flex-wrap: wrap; }

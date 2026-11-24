@@ -1,4 +1,5 @@
 import { plan } from './plan.js';
+import { estimate } from './estimate.js';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -180,11 +181,39 @@ function drawTables() {
   $('#tables').innerHTML = h;
 }
 
+// ---------- estimate ----------
+function drawEstimate() {
+  const $$ = (n) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  let h = `<h2>${esc(estimate.title)}</h2><p class="meta">${esc(estimate.note)} Dated ${esc(estimate.date)}.</p>`;
+  let sub = 0;
+  for (const g of estimate.groups) {
+    let gt = 0;
+    h += `<h2>${esc(g.name)}</h2><div class="scroll"><table><tr><th>Item</th><th>Qty</th><th>Each</th><th>Total</th><th>Notes</th></tr>`;
+    for (const it of g.items) {
+      const t = it.qty * it.each; gt += t;
+      h += `<tr><td>${esc(it.item)}</td><td>${it.qty}</td><td>${$$(it.each)}</td><td>${$$(t)}</td><td class="wrap">${esc(it.note || '')}</td></tr>`;
+    }
+    h += `<tr class="total"><td>${esc(g.name)} total</td><td></td><td></td><td>${$$(gt)}</td><td></td></tr></table></div>`;
+    sub += gt;
+  }
+  const extra = sub * estimate.extra, mat = sub + extra;
+  const labor = estimate.labor.reduce((a, l) => a + l.cost, 0);
+  h += `<h2>Totals</h2><div class="scroll"><table>` +
+    `<tr><td>Materials</td><td>${$$(sub)}</td></tr>` +
+    `<tr><td>Waste, sales tax, odds and ends (${Math.round(estimate.extra * 100)}%)</td><td>${$$(extra)}</td></tr>` +
+    `<tr class="total"><td>Do it yourself</td><td>${$$(mat)}</td></tr>`;
+  for (const l of estimate.labor) h += `<tr><td>${esc(l.item)} <span class="meta">(${esc(l.note)})</span></td><td>${$$(l.cost)}</td></tr>`;
+  h += `<tr class="total"><td>Hired out, materials and labor</td><td>${$$(mat + labor)}</td></tr></table></div>`;
+  h += `<h2>Not included</h2><ul class="meta">${estimate.excluded.map((e) => `<li>${esc(e)}</li>`).join('')}</ul>`;
+  $('#estimate').innerHTML = h;
+}
+
 // ---------- boot ----------
 document.title = plan.name;
 $('#title').textContent = plan.name;
 if (plan.note) { $('#banner').textContent = plan.note; $('#banner').hidden = false; }
 drawPlan();
 drawTables();
+drawEstimate();
 const start = location.hash.slice(1);
-show(['3d', 'plan', 'measure'].includes(start) ? start : '3d');
+show(['3d', 'plan', 'measure', 'estimate'].includes(start) ? start : '3d');
