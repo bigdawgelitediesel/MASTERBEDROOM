@@ -7,12 +7,13 @@
 //   Wall A: bedroom doorway edge to wall B = 104. Door to door (bedroom door to bathroom door) = 26 1/2.
 //   Bathroom is off wall A1: 84 1/2 wide, 135 1/2 long.
 //   Wall E is 103, not 84 1/2: the bathroom pushes in past wall A and takes that away from wall D.
+//   That pushed-in wall (A1) runs the whole way from wall D until 24 before the bedroom door.
 //
 // ASSUMED, not measured yet:
 //   Both doors drawn 32 wide x 80 tall. Bathroom door swings into the bathroom.
 //   The 135 1/2 side of the bathroom runs along wall A, starting in line with wall D.
-//   The push-in is drawn 24 wide. That comes from the first tape string for the long side,
-//   "251 1/2 + 3 1/2 + 24" = 279, read as bedroom + a wall + 24.
+//   Where the bathroom door sits. It is drawn on wall A1 near the bedroom-door end as a placeholder.
+//   (Door to door 26 1/2 and 24 before the door cannot both hold with two 32 doors on the same line.)
 //   Walls are all drawn 4 1/2 thick.
 //
 // First tape strings from the very start, kept for reference:
@@ -26,12 +27,12 @@ const h = T / 2;     // walls are drawn centered on a line, so push the line out
 const L = 279, W = 168;          // bedroom
 const BL = 135.5, BW = 84.5;     // bathroom
 const E = 103;                   // wall E, full length
-const PW = 24;                   // push-in width (assumed)
-const by = -(T + BW);            // top inside edge of the bathroom on the plan
-const pd = E - BW - T;           // how far the push-in reaches into the bedroom, inside (14)
 const DOOR = 32;
 const bedDoorX = L - 104 - DOOR;             // 143
-const bathDoorX = bedDoorX - 26.5 - DOOR;    // 84 1/2
+const PW = bedDoorX - 24 - T;    // push-in inside width: its outside face stops 24 before the bedroom door
+const by = -(T + BW);            // top inside edge of the bathroom on the plan
+const pd = E - BW - T;           // how far the push-in reaches into the bedroom, inside (14)
+const bathDoorX = PW - 2 - DOOR;             // placeholder spot on wall A1
 const ax = PW + h;                           // where wall A now starts (centerline of the push-in side wall)
 
 export const plan = {
@@ -55,13 +56,10 @@ export const plan = {
   // Openings: { type: 'door' | 'window', at, w, h, sill }, at = distance from point a.
   walls: [
     { room: 'bed', name: 'Long wall (top)',
-      // split at the bedroom doorway
       tags: [
-        { letter: 'A1', len: bedDoorX - PW - T, at: 56 - ax,      name: 'Push-in to the bedroom doorway' },
-        { letter: 'A2', len: 104,               at: L - 52 - ax,  name: 'Bedroom doorway to wall B' },
+        { letter: 'A2', len: 104, at: L - 52 - ax, name: 'Bedroom doorway to wall B' },
       ],
       a: [ax, -h], b: [L + h, -h], openings: [
-        { type: 'door', name: 'Bathroom door', label: 'BATH', at: bathDoorX - ax, w: DOOR, h: 80, swing: -1 },
         { type: 'door', name: 'Bedroom door', at: bedDoorX - ax, w: DOOR, h: 80 },
       ] },
     { letter: 'B', room: 'bed', len: W, name: 'End wall (right)',   a: [L + h, -h],    b: [L + h, W + h], openings: [] },
@@ -73,9 +71,13 @@ export const plan = {
     { letter: 'F', room: 'bath', len: BL, name: 'Bathroom back wall (across from wall A1)',      a: [-h, by - h], b: [BL + h, by - h], openings: [] },
     { letter: 'G', room: 'bath', len: BW, name: 'Bathroom right wall (bedroom door side)',       a: [BL + h, by - h], b: [BL + h, -h], openings: [] },
 
-    // The two walls of the push-in that stand inside the bedroom (not lettered yet)
-    { name: 'Push-in end wall',  a: [-h, pd + h], b: [ax, pd + h], openings: [] },
-    { name: 'Push-in side wall', a: [ax, pd + h], b: [ax, -h],     openings: [] },
+    // Wall A1: the pushed-in bathroom wall, from wall D to 24 before the bedroom door
+    { letter: 'A1', room: 'bed', len: PW + T, name: 'Pushed-in bathroom wall, wall D to 24 before the bedroom door',
+      a: [-h, pd + h], b: [ax, pd + h], openings: [
+        { type: 'door', name: 'Bathroom door (placeholder spot)', label: 'BATH', at: bathDoorX + h, w: DOOR, h: 80, swing: -1 },
+      ] },
+    // short return from A1 back to the wall A line (not lettered yet)
+    { name: 'A1 return wall', a: [ax, pd + h], b: [ax, -h], openings: [] },
   ],
 
   // Fixtures and furniture. x,y = CENTER. rot = which way its back faces (0 top, 90 right, 180 bottom, 270 left).
