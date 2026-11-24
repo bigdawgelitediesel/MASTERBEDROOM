@@ -260,10 +260,14 @@ export function createScene(container, plan) {
     const corners = new Map();
     for (const w of plan.walls) {
       root.add(buildWall(w, H));
-      if (state.labels && w.letter) {
-        const s = labelSprite('Wall ' + w.letter);
-        s.position.set((w.a[0] + w.b[0]) / 2, H + 12, (w.a[1] + w.b[1]) / 2);
-        root.add(s);
+      if (state.labels) {
+        const wl = Math.hypot(w.b[0] - w.a[0], w.b[1] - w.a[1]);
+        for (const tg of w.tags || (w.letter ? [{ letter: w.letter, at: wl / 2 }] : [])) {
+          const k = tg.at / wl;
+          const s = labelSprite('Wall ' + tg.letter);
+          s.position.set(w.a[0] + (w.b[0] - w.a[0]) * k, H + 12, w.a[1] + (w.b[1] - w.a[1]) * k);
+          root.add(s);
+        }
       }
       for (const p of [w.a, w.b]) corners.set(p.join(','), p);
     }

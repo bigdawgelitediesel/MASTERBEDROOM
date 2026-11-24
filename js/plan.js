@@ -28,10 +28,16 @@ export const plan = {
   ],
 
   // Walls run from point a to point b. letter = the wall's name tag, len = inside length.
+  // A wall split into pieces uses tags: [{ letter, len, at }] instead, at = distance from point a to the tag.
   // Lettered clockwise looking down: A top, B right, C bottom, D left.
   // Openings go in the openings list: { type: 'door' | 'window', at, w, h, sill }, at = distance from point a.
   walls: [
-    { letter: 'A', len: L, name: 'Long wall (top)',    a: [-h, -h],        b: [L + h, -h],     openings: [
+    { name: 'Long wall (top)',
+      // split at the doorway: A1 runs from wall D to the doorway, A2 from the doorway to wall B
+      tags: [
+        { letter: 'A1', len: L - 104 - 32, at: (L - 104 - 32) / 2 + h, name: 'Wall D to the doorway' },
+        { letter: 'A2', len: 104,          at: L - 52 + h,             name: 'Doorway to wall B' },
+      ],    a: [-h, -h],        b: [L + h, -h],     openings: [
       // doorway edge to wall B = 104 (measured). Standard doorway drawn 32 wide x 80 tall, on the far side of that mark from B.
       { type: 'door', at: L - 104 - 32 + h, w: 32, h: 80 },
     ] },

@@ -68,5 +68,5 @@ tr:last-child td { border-bottom: 0; }
 tr.total td { font-weight: 700; color: var(--brass); }
 .meta { color: var(--dim); font-size: 13px; }
 .wtag { fill: #c9a36b; }
-.wtagt { fill: #17130c; font-size: 10px; font-weight: 800; text-anchor: middle; }
+.wtagt { fill: #17130c; font-size: 9px; font-weight: 800; text-anchor: middle; }
 .wlen { fill: #c9a36b; font-size: 6.5px; font-weight: 600; text-anchor: middle; }

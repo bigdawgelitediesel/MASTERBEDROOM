@@ -10,6 +10,8 @@ export function ft(inches) {
   return `${f}' ${i}"`;
 }
 const sqft = (r) => (r.w * r.d) / 144;
+// a wall's name tags: either its single letter or its list of split pieces
+const tagsOf = (w, L) => w.tags || (w.letter ? [{ letter: w.letter, len: w.len, at: L / 2, name: w.name }] : []);
 
 // ---------- tabs ----------
 let scene3d = null;
@@ -106,14 +108,15 @@ function drawPlan() {
   // wall letters, just inside each wall
   const pcx = (minX + maxX) / 2, pcy = (minY + maxY) / 2;
   for (const w of plan.walls) {
-    if (!w.letter) continue;
-    const mx = (w.a[0] + w.b[0]) / 2, my = (w.a[1] + w.b[1]) / 2;
     const dx = w.b[0] - w.a[0], dy = w.b[1] - w.a[1], L = Math.hypot(dx, dy);
+    for (const tg of tagsOf(w, L)) {
+    const mx = w.a[0] + dx * tg.at / L, my = w.a[1] + dy * tg.at / L;
     let nx = -dy / L, ny = dx / L;
     if (nx * (pcx - mx) + ny * (pcy - my) < 0) { nx = -nx; ny = -ny; }
     const lx = mx + nx * 17, ly = my + ny * 17;
-    s += `<circle class="wtag" cx="${lx}" cy="${ly}" r="8"/><text class="wtagt" x="${lx}" y="${ly + 3.6}">${esc(w.letter)}</text>`;
-    if (w.len) s += `<text class="wlen" x="${lx + nx * 23}" y="${ly + ny * 15 + 2.2}">${ft(w.len)}</text>`;
+    s += `<circle class="wtag" cx="${lx}" cy="${ly}" r="${tg.letter.length > 1 ? 9.5 : 8}"/><text class="wtagt" x="${lx}" y="${ly + 3.6}">${esc(tg.letter)}</text>`;
+    if (tg.len) s += `<text class="wlen" x="${lx + nx * 23}" y="${ly + ny * 15 + 2.2}">${ft(tg.len)}</text>`;
+    }
   }
 
   // overall dimensions
@@ -138,7 +141,7 @@ function drawTables() {
   h += `<tr class="total"><td>Total</td><td></td><td></td><td>${total.toFixed(1)} sq ft</td><td></td></tr></table></div>`;
   h += `<p class="meta">Ceiling height ${ft(plan.ceiling)}. Wall thickness ${plan.wallThickness}".</p>`;
 
-  const lettered = plan.walls.filter((w) => w.letter);
+  const lettered = plan.walls.flatMap((w) => tagsOf(w, 0).map((tg) => ({ letter: tg.letter, len: tg.len, name: tg.name || w.name })));
   if (lettered.length) {
     h += `<h2>Walls</h2><div class="scroll"><table><tr><th>Wall</th><th>Where</th><th>Length</th><th>Inches</th><th>Height</th></tr>`;
     for (const w of lettered) {
@@ -149,7 +152,7 @@ function drawTables() {
 
   h += `<h2>Doors and windows</h2><div class="scroll"><table><tr><th>Wall</th><th>Type</th><th>Width</th><th>Height</th><th>Sill</th><th>From wall start</th></tr>`;
   for (const w of plan.walls) for (const o of w.openings || []) {
-    h += `<tr><td>${esc(w.letter ? 'Wall ' + w.letter : w.name || '')}</td><td>${esc(o.type)}</td><td>${ft(o.w)}</td><td>${ft(o.h)}</td><td>${o.type === 'window' ? ft(o.sill || 0) : ''}</td><td>${ft(o.at)}</td></tr>`;
+    h += `<tr><td>${esc(w.letter ? 'Wall ' + w.letter : w.tags ? 'Wall ' + w.tags[0].letter.replace(/\d+$/, '') : w.name || '')}</td><td>${esc(o.type)}</td><td>${ft(o.w)}</td><td>${ft(o.h)}</td><td>${o.type === 'window' ? ft(o.sill || 0) : ''}</td><td>${ft(o.at)}</td></tr>`;
   }
   h += `</table></div>`;
 
